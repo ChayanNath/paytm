@@ -50,7 +50,7 @@ export const transferBalance = async (
     const fromAccount = await Account.findOne({
       userId: fromId,
     }).session(session);
-    console.log(fromAccount);
+
     const toAccount = await Account.findOne({ userId: toId }).session(session);
 
     if (!fromAccount || !toAccount) {
