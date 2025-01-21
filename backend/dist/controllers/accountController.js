@@ -56,7 +56,6 @@ const transferBalance = (req, res) => __awaiter(void 0, void 0, void 0, function
         const fromAccount = yield Account_1.default.findOne({
             userId: fromId,
         }).session(session);
-        console.log(fromAccount);
         const toAccount = yield Account_1.default.findOne({ userId: toId }).session(session);
         if (!fromAccount || !toAccount) {
             yield session.abortTransaction();
