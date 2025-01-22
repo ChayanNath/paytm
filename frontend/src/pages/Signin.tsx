@@ -38,6 +38,7 @@ function Signin() {
 
       if (response.status === 200) {
         console.log("Signin successful:", response.data);
+        localStorage.setItem("token", response.data.token);
         navigate("/dashboard");
       }
     } catch (error) {
