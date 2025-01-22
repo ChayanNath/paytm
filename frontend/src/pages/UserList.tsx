@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { memo } from "react";
 
 type User = {
-  id: number;
+  _id: number;
   firstName: string;
   lastName: string;
 };
@@ -27,9 +27,9 @@ const UserList = memo(
     }
 
     return (
-      <div>
+      <div className="flex flex-col gap-4">
         {users.map((user: User) => (
-          <Card key={user.id} className="w-full">
+          <Card key={user._id} className="w-full">
             <CardHeader className="flex flex-row items-center justify-between">
               <div className="flex gap-2 items-center">
                 <Avatar>

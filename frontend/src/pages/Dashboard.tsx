@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import UserList from "./UserList";
 
 type User = {
-  id: number;
+  _id: number;
   firstName: string;
   lastName: string;
 };
@@ -85,18 +85,14 @@ const Dashboard = () => {
     }
   };
 
-  // Handle "Send Money" button click
   const handleSendMoney = (user: User) => {
-    navigate(
-      `/send-money?id=${user.id}&name=${user.firstName} ${user.lastName}`
-    );
+    navigate(`/send?id=${user._id}&name=${user.firstName} ${user.lastName}`);
   };
 
   useEffect(() => {
     fetchUsers("");
   }, []);
 
-  console.log("render");
   return (
     <div>
       <Header />

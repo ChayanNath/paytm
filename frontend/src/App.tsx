@@ -7,6 +7,7 @@ import SendMoney from "@/pages/SendMoney";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import NonAuthLayout from "@/pages/NonAuthLayout";
+import { Toaster } from "@/components/ui/toaster";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
+      <Toaster />
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <RouterProvider router={router} />
       </ThemeProvider>

@@ -40,7 +40,6 @@ export const signin = async (req: Request, res: Response): Promise<any> => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     const allUsers = await User.find();
-    console.log(allUsers);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
