@@ -1,9 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "@/context/authContext";
 
 const PublicRoute = () => {
-  const token = localStorage.getItem("token");
+  const { isAuthenticated } = useAuth();
 
-  if (token) {
+  if (isAuthenticated) {
     return <Navigate to="/dashboard" />;
   }
 

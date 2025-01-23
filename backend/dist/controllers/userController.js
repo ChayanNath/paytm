@@ -67,7 +67,7 @@ const getLoggedInUser = (req, res) => __awaiter(void 0, void 0, void 0, function
         if (!req.user || !req.user.id) {
             return res.status(403).json({ message: "You are not authenticated" });
         }
-        const user = yield User_1.default.findById(req.user.id);
+        const user = yield User_1.default.findById(req.user.id).select("_id firstName lastName email");
         return res.status(200).json(user);
     }
     catch (error) {

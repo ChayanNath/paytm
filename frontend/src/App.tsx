@@ -9,11 +9,16 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import PublicRoute from "@/components/PublicRoute";
+import { AuthProvider } from "./context/authContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: (
+      <AuthProvider>
+        <Root />
+      </AuthProvider>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {

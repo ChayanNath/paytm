@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "@/api/axiosInstance";
+import { useState } from "react";
+import { useAuth } from "@/context/authContext";
 import axios from "axios";
 
 const signinSchema = z.object({
@@ -25,6 +27,9 @@ type SigninFormData = z.infer<typeof signinSchema>;
 
 function Signin() {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Destructure the login function from useAuth
+  const [error, setError] = useState<string | null>(null); // State for capturing error messages
+
   const {
     register,
     handleSubmit,
@@ -38,23 +43,26 @@ function Signin() {
       const response = await axiosInstance.post("/signin", data);
 
       if (response.status === 200) {
-        console.log("Signin successful:", response.data);
-        localStorage.setItem("token", response.data.token);
+        const { token } = response.data;
+        login(token);
         navigate("/dashboard");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response?.data || error.message);
+        setError("Signin failed. Please check your credentials.");
       } else {
         console.error("Unexpected error:", error);
+        setError("Something went wrong. Please try again later.");
       }
     }
   };
+
   return (
     <Card className="w-[350px]">
       <CardHeader>
         <CardTitle>Sign In</CardTitle>
-        <CardDescription>Sign in into your paytm</CardDescription>
+        <CardDescription>Sign in into your account</CardDescription>
       </CardHeader>
       <CardContent>
         <form>
@@ -87,10 +95,15 @@ function Signin() {
               )}
             </div>
           </div>
+          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
         </form>
       </CardContent>
       <CardFooter className="flex justify-between flex-col gap-2">
-        <Button className="w-full" onClick={handleSubmit(onSubmit)}>
+        <Button
+          className="w-full"
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+        >
           Sign In
         </Button>
         <Link to="/signup" className="text-sm">

@@ -26,26 +26,32 @@ export const getAllUsers = async (
 ): Promise<any> => {
   try {
     const { filter } = req.query;
-    const users = await User.find(
-      filter
-        ? {
-            $or: [
-              {
-                firstName: {
-                  $regex: filter,
-                  $options: "i",
+    const loggedInUserId = req.user?.id;
+    const users = await User.find({
+      $and: [
+        {
+          _id: { $ne: loggedInUserId },
+        },
+        filter
+          ? {
+              $or: [
+                {
+                  firstName: {
+                    $regex: filter,
+                    $options: "i",
+                  },
                 },
-              },
-              {
-                lastName: {
-                  $regex: filter,
-                  $options: "i",
+                {
+                  lastName: {
+                    $regex: filter,
+                    $options: "i",
+                  },
                 },
-              },
-            ],
-          }
-        : {}
-    ).select("_id firstName lastName email");
+              ],
+            }
+          : {},
+      ],
+    }).select("_id firstName lastName email");
 
     return res.status(200).json(users);
   } catch (error) {
@@ -61,7 +67,9 @@ export const getLoggedInUser = async (
     if (!req.user || !req.user.id) {
       return res.status(403).json({ message: "You are not authenticated" });
     }
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).select(
+      "_id firstName lastName email"
+    );
     return res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
