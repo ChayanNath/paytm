@@ -49,7 +49,6 @@ const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password } = req.body;
         const user = yield User_1.default.findOne({ email });
         const allUsers = yield User_1.default.find();
-        console.log(allUsers);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }

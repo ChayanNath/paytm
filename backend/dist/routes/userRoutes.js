@@ -8,4 +8,5 @@ const userController_1 = require("../controllers/userController");
 const router = express_1.default.Router();
 router.put("/", userController_1.updateUser);
 router.get("/bulk", userController_1.getAllUsers);
+router.get("/me", userController_1.getLoggedInUser);
 exports.default = router;

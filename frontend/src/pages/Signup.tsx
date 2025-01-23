@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import axiosInstance from "@/api/axiosInstance";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,7 +37,7 @@ function Signup() {
 
   const onSubmit = async (data: SignupFormData) => {
     try {
-      const response = await axios.post("/api/v1/signup", data);
+      const response = await axiosInstance.post("/signup", data);
 
       if (response.status === 200) {
         console.log("Signup successful:", response.data);

@@ -6,8 +6,9 @@ import Dashboard from "@/pages/Dashboard";
 import SendMoney from "@/pages/SendMoney";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
-import NonAuthLayout from "@/pages/NonAuthLayout";
 import { Toaster } from "@/components/ui/toaster";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import PublicRoute from "@/components/PublicRoute";
 
 const router = createBrowserRouter([
   {
@@ -16,19 +17,18 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        element: <NonAuthLayout />,
+        element: <PublicRoute />,
         children: [
           { path: "/signup", element: <Signup /> },
           { path: "/signin", element: <Signin /> },
         ],
       },
       {
-        path: "/dashboard",
-        element: <Dashboard />,
-      },
-      {
-        path: "/send",
-        element: <SendMoney />,
+        element: <ProtectedRoute />,
+        children: [
+          { path: "/dashboard", element: <Dashboard /> },
+          { path: "/send", element: <SendMoney /> },
+        ],
       },
     ],
   },

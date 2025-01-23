@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import axios from "axios";
+import axiosInstance from "@/api/axiosInstance";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -30,8 +30,8 @@ const SendMoney = () => {
   const handleSendMoney = async () => {
     try {
       console.log("Sending money...");
-      const response = await axios.post(
-        "/api/v1/account/transfer",
+      const response = await axiosInstance.post(
+        "/account/transfer",
         {
           amount: amount,
           toId: user._id,

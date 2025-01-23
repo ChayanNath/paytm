@@ -52,3 +52,18 @@ export const getAllUsers = async (
     res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+export const getLoggedInUser = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(403).json({ message: "You are not authenticated" });
+    }
+    const user = await User.findById(req.user.id);
+    return res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};

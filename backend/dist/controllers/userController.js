@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsers = exports.updateUser = void 0;
+exports.getLoggedInUser = exports.getAllUsers = exports.updateUser = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { firstName, lastName } = req.body;
@@ -62,3 +62,16 @@ const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.getAllUsers = getAllUsers;
+const getLoggedInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!req.user || !req.user.id) {
+            return res.status(403).json({ message: "You are not authenticated" });
+        }
+        const user = yield User_1.default.findById(req.user.id);
+        return res.status(200).json(user);
+    }
+    catch (error) {
+        res.status(500).json({ message: "Something went wrong" });
+    }
+});
+exports.getLoggedInUser = getLoggedInUser;

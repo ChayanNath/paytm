@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "@/api/axiosInstance";
 import axios from "axios";
 
 const signinSchema = z.object({
@@ -34,7 +35,7 @@ function Signin() {
 
   const onSubmit = async (data: SigninFormData) => {
     try {
-      const response = await axios.post("/api/v1/signin", data);
+      const response = await axiosInstance.post("/signin", data);
 
       if (response.status === 200) {
         console.log("Signin successful:", response.data);
